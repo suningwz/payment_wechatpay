@@ -1,4 +1,5 @@
 ![](static/src/image/wechat_pay.png)
+
 odoo 微信支付模块
 
 ## About

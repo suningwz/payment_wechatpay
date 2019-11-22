@@ -1,60 +1,18 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-    <!--
-    <record model="ir.ui.view" id="payment_wechat.list">
-      <field name="name">payment_wechat list</field>
-      <field name="model">payment_wechat.payment_wechat</field>
+    <record model="ir.ui.view" id="acquirer_form_wechatpay">
+      <field name="name">acquirer.form.wechatpay</field>
+      <field name="model">payment.acquirer</field>
+      <field name="inherit_id" ref="payment.acquirer_form"/>
       <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
+        <xpath expr='//group[@name="acquirer"]' position='after'>
+          <group attrs="{'invisible': [('provider', '!=', 'wechatpay')]}">
+            <field name="wechatpay_appid"/>
+            <field name="wechatpay_app_key"/>
+            <field name="wechatpay_mch_id"/>
+          </group>
+        </xpath>
       </field>
     </record>
-    -->
-
-    <!-- actions opening views on models -->
-    <!--
-    <record model="ir.actions.act_window" id="payment_wechat.action_window">
-      <field name="name">payment_wechat window</field>
-      <field name="res_model">payment_wechat.payment_wechat</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    -->
-
-    <!-- server action to the one above -->
-    <!--
-    <record model="ir.actions.server" id="payment_wechat.action_server">
-      <field name="name">payment_wechat server</field>
-      <field name="model_id" ref="model_payment_wechat_payment_wechat"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": self._name,
-        }
-      </field>
-    </record>
-    -->
-
-    <!-- Top menu item -->
-    <!--
-    <menuitem name="payment_wechat" id="payment_wechat.menu_root"/>
-    -->
-    <!-- menu categories -->
-    <!--
-    <menuitem name="Menu 1" id="payment_wechat.menu_1" parent="payment_wechat.menu_root"/>
-    <menuitem name="Menu 2" id="payment_wechat.menu_2" parent="payment_wechat.menu_root"/>
-    -->
-    <!-- actions -->
-    <!--
-    <menuitem name="List" id="payment_wechat.menu_1_list" parent="payment_wechat.menu_1"
-              action="payment_wechat.action_window"/>
-    <menuitem name="Server to list" id="payment_wechat" parent="payment_wechat.menu_2"
-              action="payment_wechat.action_server"/>
-    -->
   </data>
 </odoo>

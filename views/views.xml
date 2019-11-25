@@ -10,6 +10,8 @@
             <field name="wechatpay_appid"/>
             <field name="wechatpay_app_key"/>
             <field name="wechatpay_mch_id"/>
+            <field name="wechatpay_mch_key"/>
+            <field name="wechatpay_mch_cert"/>
           </group>
         </xpath>
       </field>

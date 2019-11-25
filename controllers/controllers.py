@@ -27,7 +27,7 @@ class WeChatPay(http.Controller):
         # 获取微信支付
         acquirer = request.env['payment.acquirer'].sudo().search(
             [('provider', '=', 'wechatpay')], limit=1)
-        qrcode = acquirer._get_qrcode_url()
+        qrcode = acquirer._get_qrcode_url(order)
         values = {}
         values['qrcode'] = self.make_qrcode(qrcode)
         values['order'] = order.name

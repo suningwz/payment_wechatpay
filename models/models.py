@@ -13,8 +13,10 @@ class AcquirerWeChatPay(models.Model):
 
     provider = fields.Selection(selection_add=[('wechatpay', 'WeChatPay')])
     wechatpay_appid = fields.Char("WeChatPay AppId", size=32)
-    wechatpay_app_key = fields.Char("Merchat Key")
+    wechatpay_app_key = fields.Char("Api Key")
     wechatpay_mch_id = fields.Char("Merchant Id", size=32)
+    wechatpay_mch_key = fields.Char("Merchat Key")
+    wechatpay_mch_cert = fields.Binary("Merchant Cert")
 
     def _get_feature_support(self):
         res = super(AcquirerWeChatPay, self)._get_feature_support()
@@ -25,16 +27,20 @@ class AcquirerWeChatPay(models.Model):
         """获取微信支付客户端"""
         try:
             # WeChatPay has no sandbox enviroment.
-            # [FIXME] 微信支付条件不全
-            wechatpay = WeChatPay(self.wechatpay_appid, self.wechatpay_mch_id,
-                                  self.wechatpay_mch_id)
+            wechatpay = WeChatPay(self.wechatpay_appid,
+                                  self.wechatpay_app_key,
+                                  self.wechatpay_mch_id,
+                                  mch_cert=self.wechatpay_mch_cert,
+                                  mch_key=self.wechatpay_mch_key)
             return wechatpay
         except Exception as err:
             _logger.exception(f"生成微信支付客户端失败:{err}")
 
-    def _get_qrcode_url(self):
+    def _get_qrcode_url(self, order):
         """获取微信支付二维码"""
         wechatpay = self._get_wechatpay()
+        wechatpay.order.create(trade_type="NATIVE", body=order.name,
+                               out_trade_no=order.name, total_fee="1", notify_url="")
         # [FIXME] 伪代码
         qrstring = "weixin://wxpay/s/An4baqw"
         return qrstring

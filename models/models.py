@@ -15,7 +15,7 @@ class AcquirerWeChatPay(models.Model):
     wechatpay_appid = fields.Char("WeChatPay AppId", size=32)
     wechatpay_app_key = fields.Char("Api Key")
     wechatpay_mch_id = fields.Char("Merchant Id", size=32)
-    wechatpay_mch_key = fields.Char("Merchat Key")
+    wechatpay_mch_key = fields.Binary("Merchat Key")
     wechatpay_mch_cert = fields.Binary("Merchant Cert")
 
     def _get_feature_support(self):
